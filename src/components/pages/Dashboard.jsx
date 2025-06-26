@@ -21,23 +21,38 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
 
-  const loadData = async () => {
+const loadData = async () => {
     try {
       setLoading(true)
       setError('')
       
       const [clientsData, policiesData, claimsData] = await Promise.all([
-        clientService.getAll(),
-        policyService.getAll(),
-        claimService.getAll()
+        clientService.getAll().catch(err => {
+          console.error('Failed to load clients:', err)
+          return []
+        }),
+        policyService.getAll().catch(err => {
+          console.error('Failed to load policies:', err)
+          return []
+        }),
+        claimService.getAll().catch(err => {
+          console.error('Failed to load claims:', err)
+          return []
+        })
       ])
       
-      setClients(clientsData)
-      setPolicies(policiesData)
-      setClaims(claimsData)
+      // Ensure data is valid arrays before setting state
+      setClients(Array.isArray(clientsData) ? clientsData : [])
+      setPolicies(Array.isArray(policiesData) ? policiesData : [])
+      setClaims(Array.isArray(claimsData) ? claimsData : [])
     } catch (err) {
+      console.error('Dashboard data loading error:', err)
       setError('Failed to load dashboard data')
       toast.error('Failed to load dashboard data')
+      // Set empty arrays as fallback
+      setClients([])
+      setPolicies([])
+      setClaims([])
     } finally {
       setLoading(false)
     }
