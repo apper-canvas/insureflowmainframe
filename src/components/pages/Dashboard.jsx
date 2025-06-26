@@ -1,17 +1,19 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
-import { toast } from 'react-toastify'
-import StatsCard from '@/components/molecules/StatsCard'
-import LoadingSpinner from '@/components/atoms/LoadingSpinner'
-import Button from '@/components/atoms/Button'
-import Card from '@/components/atoms/Card'
-import Badge from '@/components/atoms/Badge'
-import ApperIcon from '@/components/ApperIcon'
-import { clientService } from '@/services/api/clientService'
-import { policyService } from '@/services/api/policyService'
-import { claimService } from '@/services/api/claimService'
-import { format } from 'date-fns'
-
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { toast } from "react-toastify";
+import { format } from "date-fns";
+import Chart from "react-apexcharts";
+import { policyService } from "@/services/api/policyService";
+import { clientService } from "@/services/api/clientService";
+import { claimService } from "@/services/api/claimService";
+import ApperIcon from "@/components/ApperIcon";
+import Policies from "@/components/pages/Policies";
+import Claims from "@/components/pages/Claims";
+import StatsCard from "@/components/molecules/StatsCard";
+import Card from "@/components/atoms/Card";
+import Badge from "@/components/atoms/Badge";
+import LoadingSpinner from "@/components/atoms/LoadingSpinner";
+import Button from "@/components/atoms/Button";
 const Dashboard = () => {
   const [clients, setClients] = useState([])
   const [policies, setPolicies] = useState([])
@@ -61,14 +63,160 @@ const Dashboard = () => {
   const recentClaims = claims
     .sort((a, b) => new Date(b.dateSubmitted) - new Date(a.dateSubmitted))
     .slice(0, 5)
-
-  const formatCurrency = (amount) => {
+const formatCurrency = (amount) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 0
     }).format(amount)
   }
+
+  // Calculate premium trends by month
+  const premiumTrends = React.useMemo(() => {
+    const monthlyData = {};
+    policies.forEach(policy => {
+      const month = format(new Date(policy.startDate), 'MMM yyyy');
+      if (!monthlyData[month]) {
+        monthlyData[month] = 0;
+      }
+      monthlyData[month] += policy.premium;
+    });
+    
+    return Object.entries(monthlyData)
+      .map(([month, total]) => ({ month, total }))
+      .sort((a, b) => new Date(a.month) - new Date(b.month))
+      .slice(-6); // Last 6 months
+  }, [policies]);
+
+  // Calculate policy duration distribution
+  const policyDurations = React.useMemo(() => {
+    const durationData = {};
+    policies.forEach(policy => {
+      const startDate = new Date(policy.startDate);
+      const endDate = new Date(policy.endDate);
+      const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 365)); // Years
+      const type = policy.type;
+      
+      if (!durationData[type]) {
+        durationData[type] = { total: 0, count: 0 };
+      }
+      durationData[type].total += duration;
+      durationData[type].count += 1;
+    });
+    
+    return Object.entries(durationData).map(([type, data]) => ({
+      type,
+      avgDuration: Math.round(data.total / data.count * 10) / 10
+    }));
+  }, [policies]);
+
+  // Calculate claim resolution times
+  const claimResolutionTimes = React.useMemo(() => {
+    const resolutionData = {};
+    claims.forEach(claim => {
+      const status = claim.status;
+      if (claim.dateResolved) {
+        const submitDate = new Date(claim.dateSubmitted);
+        const resolveDate = new Date(claim.dateResolved);
+        const days = Math.ceil((resolveDate - submitDate) / (1000 * 60 * 60 * 24));
+        
+        if (!resolutionData[status]) {
+          resolutionData[status] = { total: 0, count: 0 };
+        }
+        resolutionData[status].total += days;
+        resolutionData[status].count += 1;
+      }
+    });
+    
+    return Object.entries(resolutionData).map(([status, data]) => ({
+      status,
+      avgDays: Math.round(data.total / data.count),
+      count: data.count
+    }));
+  }, [claims]);
+
+  // Chart options
+  const premiumChartOptions = {
+    chart: {
+      type: 'area',
+      toolbar: { show: false },
+      sparkline: { enabled: false }
+    },
+    stroke: { curve: 'smooth', width: 3 },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shadeIntensity: 1,
+        opacityFrom: 0.3,
+        opacityTo: 0.1
+      }
+    },
+    colors: ['#3B82F6'],
+    xaxis: {
+      categories: premiumTrends.map(t => t.month),
+      labels: { style: { fontSize: '12px' } }
+    },
+    yaxis: {
+      labels: {
+        formatter: (value) => formatCurrency(value)
+      }
+    },
+    grid: { show: true, strokeDashArray: 3 },
+    tooltip: {
+      y: { formatter: (value) => formatCurrency(value) }
+    }
+  };
+
+  const durationChartOptions = {
+    chart: { type: 'donut' },
+    labels: policyDurations.map(d => d.type),
+    colors: ['#8B5CF6', '#06B6D4', '#10B981', '#F59E0B', '#EF4444'],
+    legend: { position: 'bottom' },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: '60%',
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              label: 'Avg Years',
+              formatter: () => {
+                const avg = policyDurations.reduce((sum, d) => sum + d.avgDuration, 0) / policyDurations.length;
+                return Math.round(avg * 10) / 10;
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+
+  const resolutionChartOptions = {
+    chart: {
+      type: 'bar',
+      toolbar: { show: false }
+    },
+    colors: ['#10B981'],
+    xaxis: {
+      categories: claimResolutionTimes.map(r => r.status),
+      labels: { style: { fontSize: '12px' } }
+    },
+    yaxis: {
+      title: { text: 'Days' },
+      labels: { formatter: (value) => Math.round(value) }
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 4,
+        columnWidth: '60%'
+      }
+    },
+    grid: { show: true, strokeDashArray: 3 },
+    tooltip: {
+      y: { formatter: (value) => `${value} days` }
+    }
+  };
 
   if (loading) {
     return (
@@ -310,6 +458,146 @@ const Dashboard = () => {
                 <Button variant="ghost" size="sm" className="w-full">
                   View All Claims
                 </Button>
+              </div>
+            )}
+          </Card>
+</motion.div>
+      </div>
+
+      {/* Charts Section */}
+      <div className="space-y-8">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              Analytics & Insights
+            </h2>
+            <p className="text-gray-600 mt-1">Visual breakdown of key business metrics</p>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Premium Trends Chart */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.7 }}
+          >
+            <Card>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-gradient-to-br from-blue-500 to-indigo-600 p-3 rounded-xl text-white shadow-lg">
+                    <ApperIcon name="TrendingUp" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Premium Trends</h3>
+                    <p className="text-sm text-gray-600">Monthly premium collection over time</p>
+                  </div>
+                </div>
+                <Badge variant="info">
+                  {premiumTrends.length} Months
+                </Badge>
+              </div>
+              
+              {premiumTrends.length > 0 ? (
+                <div className="h-80">
+                  <Chart
+                    options={premiumChartOptions}
+                    series={[{
+                      name: 'Monthly Premiums',
+                      data: premiumTrends.map(t => t.total)
+                    }]}
+                    type="area"
+                    height="100%"
+                  />
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <ApperIcon name="BarChart3" size={32} className="text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-600">No premium data available</p>
+                </div>
+              )}
+            </Card>
+          </motion.div>
+
+          {/* Policy Duration Distribution */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.8 }}
+          >
+            <Card>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-3 rounded-xl text-white shadow-lg">
+                    <ApperIcon name="PieChart" size={20} />
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900">Policy Durations</h3>
+                    <p className="text-sm text-gray-600">Average duration by policy type</p>
+                  </div>
+                </div>
+                <Badge variant="secondary">
+                  {policyDurations.length} Types
+                </Badge>
+              </div>
+              
+              {policyDurations.length > 0 ? (
+                <div className="h-80">
+                  <Chart
+                    options={durationChartOptions}
+                    series={policyDurations.map(d => d.avgDuration)}
+                    type="donut"
+                    height="100%"
+                  />
+                </div>
+              ) : (
+                <div className="text-center py-12">
+                  <ApperIcon name="PieChart" size={32} className="text-gray-400 mx-auto mb-2" />
+                  <p className="text-gray-600">No duration data available</p>
+                </div>
+              )}
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* Claim Resolution Times - Full Width */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.9 }}
+        >
+          <Card>
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div className="bg-gradient-to-br from-green-500 to-emerald-600 p-3 rounded-xl text-white shadow-lg">
+                  <ApperIcon name="Clock" size={20} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">Claim Resolution Times</h3>
+                  <p className="text-sm text-gray-600">Average processing time by claim status</p>
+                </div>
+              </div>
+              <Badge variant="success">
+                {claimResolutionTimes.reduce((sum, r) => sum + r.count, 0)} Claims
+              </Badge>
+            </div>
+            
+            {claimResolutionTimes.length > 0 ? (
+              <div className="h-64">
+                <Chart
+                  options={resolutionChartOptions}
+                  series={[{
+                    name: 'Average Days',
+                    data: claimResolutionTimes.map(r => r.avgDays)
+                  }]}
+                  type="bar"
+                  height="100%"
+                />
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <ApperIcon name="BarChart3" size={32} className="text-gray-400 mx-auto mb-2" />
+                <p className="text-gray-600">No resolution data available</p>
               </div>
             )}
           </Card>

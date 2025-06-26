@@ -51,8 +51,60 @@ class PolicyService {
       throw new Error('Policy not found')
     }
     this.policies.splice(index, 1)
+this.policies.splice(index, 1)
     return true
   }
-}
 
-export const policyService = new PolicyService()
+  // Analytics methods for dashboard charts
+  async getPremiumTrends() {
+    await this.delay()
+    const premiumsByMonth = {}
+    
+    this.policies.forEach(policy => {
+      const date = new Date(policy.startDate)
+      const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+      
+      if (!premiumsByMonth[monthKey]) {
+        premiumsByMonth[monthKey] = 0
+      }
+      premiumsByMonth[monthKey] += policy.premium
+    })
+    
+    const sortedMonths = Object.keys(premiumsByMonth).sort()
+    const trends = sortedMonths.map(month => ({
+      month,
+      total: premiumsByMonth[month],
+      policies: this.policies.filter(p => {
+        const date = new Date(p.startDate)
+        const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`
+        return monthKey === month
+      }).length
+    }))
+    
+    return trends
+  }
+
+  async getPolicyDurations() {
+    await this.delay()
+    const durationsByType = {}
+    
+    this.policies.forEach(policy => {
+      const startDate = new Date(policy.startDate)
+      const endDate = new Date(policy.endDate)
+      const durationMonths = Math.round((endDate - startDate) / (1000 * 60 * 60 * 24 * 30))
+      
+      if (!durationsByType[policy.type]) {
+        durationsByType[policy.type] = []
+      }
+      durationsByType[policy.type].push(durationMonths)
+    })
+    
+    const avgDurations = Object.keys(durationsByType).map(type => ({
+      type,
+      avgDuration: Math.round(durationsByType[type].reduce((a, b) => a + b, 0) / durationsByType[type].length),
+      count: durationsByType[type].length
+    }))
+    
+    return avgDurations.sort((a, b) => b.avgDuration - a.avgDuration)
+  }
+}
