@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useSelector } from 'react-redux'
 import ApperIcon from '@/components/ApperIcon'
 import NavigationItem from '@/components/molecules/NavigationItem'
 import SearchBar from '@/components/molecules/SearchBar'
+import Button from '@/components/atoms/Button'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '@/App'
 
 const Layout = ({ children }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -72,10 +75,13 @@ const Layout = ({ children }) => {
             ))}
           </nav>
 
-          {/* Footer */}
+{/* Footer */}
           <div className="p-6 border-t border-gray-200 bg-gradient-to-r from-gray-50 to-white">
-            <div className="text-xs text-gray-500 text-center">
-              © 2024 InsureFlow CRM
+            <div className="space-y-3">
+              <LogoutButton />
+              <div className="text-xs text-gray-500 text-center">
+                © 2024 InsureFlow CRM
+              </div>
             </div>
           </div>
         </div>
@@ -162,8 +168,41 @@ const Layout = ({ children }) => {
           >
             {children}
           </motion.div>
-        </main>
+</main>
       </div>
+    </div>
+  )
+}
+
+// Logout Component
+const LogoutButton = () => {
+  const { logout } = useContext(AuthContext)
+  const user = useSelector((state) => state.user.user)
+  
+  const handleLogout = async () => {
+    try {
+      await logout()
+    } catch (error) {
+      console.error("Logout error:", error)
+    }
+  }
+  
+  return (
+    <div className="space-y-2">
+      {user && (
+        <div className="text-xs text-gray-600 text-center">
+          {user.firstName} {user.lastName}
+        </div>
+      )}
+      <Button
+        variant="secondary"
+        size="sm"
+        icon="LogOut"
+        onClick={handleLogout}
+        className="w-full"
+      >
+        Logout
+      </Button>
     </div>
   )
 }
