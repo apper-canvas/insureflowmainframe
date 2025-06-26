@@ -1,0 +1,169 @@
+{
+  "policyData": [
+    {
+      "id": "1",
+      "clientId": "1",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2024-001",
+      "premium": 1200,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 250000
+    },
+    {
+      "id": "2",
+      "clientId": "1",
+      "type": "Auto Insurance",
+      "policyNumber": "AI-2024-001",
+      "premium": 800,
+      "startDate": "2024-02-01T00:00:00.000Z",
+      "endDate": "2025-01-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 100000
+    },
+    {
+      "id": "3",
+      "clientId": "2",
+      "type": "Commercial Property",
+      "policyNumber": "CP-2024-001",
+      "premium": 2500,
+      "startDate": "2024-01-15T00:00:00.000Z",
+      "endDate": "2025-01-14T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 500000
+    },
+    {
+      "id": "4",
+      "clientId": "2",
+      "type": "Auto Insurance",
+      "policyNumber": "AI-2024-002",
+      "premium": 950,
+      "startDate": "2024-03-01T00:00:00.000Z",
+      "endDate": "2025-02-28T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 150000
+    },
+    {
+      "id": "5",
+      "clientId": "3",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2024-002",
+      "premium": 1450,
+      "startDate": "2024-03-15T00:00:00.000Z",
+      "endDate": "2025-03-14T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 300000
+    },
+    {
+      "id": "6",
+      "clientId": "4",
+      "type": "Specialty Vehicle",
+      "policyNumber": "SV-2024-001",
+      "premium": 3200,
+      "startDate": "2023-11-01T00:00:00.000Z",
+      "endDate": "2024-10-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 750000
+    },
+    {
+      "id": "7",
+      "clientId": "4",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2024-003",
+      "premium": 1800,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 450000
+    },
+    {
+      "id": "8",
+      "clientId": "5",
+      "type": "Auto Insurance",
+      "policyNumber": "AI-2024-003",
+      "premium": 720,
+      "startDate": "2024-04-20T00:00:00.000Z",
+      "endDate": "2025-04-19T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 75000
+    },
+    {
+      "id": "9",
+      "clientId": "6",
+      "type": "Commercial Liability",
+      "policyNumber": "CL-2024-001",
+      "premium": 4500,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 1000000
+    },
+    {
+      "id": "10",
+      "clientId": "6",
+      "type": "Equipment Insurance",
+      "policyNumber": "EI-2024-001",
+      "premium": 2200,
+      "startDate": "2024-02-01T00:00:00.000Z",
+      "endDate": "2025-01-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 350000
+    },
+    {
+      "id": "11",
+      "clientId": "7",
+      "type": "Professional Liability",
+      "policyNumber": "PL-2024-001",
+      "premium": 1600,
+      "startDate": "2024-07-01T00:00:00.000Z",
+      "endDate": "2025-06-30T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 500000
+    },
+    {
+      "id": "12",
+      "clientId": "8",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2024-004",
+      "premium": 1350,
+      "startDate": "2024-01-01T00:00:00.000Z",
+      "endDate": "2024-12-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 275000
+    },
+    {
+      "id": "13",
+      "clientId": "9",
+      "type": "Renters Insurance",
+      "policyNumber": "RI-2024-001",
+      "premium": 240,
+      "startDate": "2024-08-15T00:00:00.000Z",
+      "endDate": "2025-08-14T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 50000
+    },
+    {
+      "id": "14",
+      "clientId": "10",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2023-005",
+      "premium": 980,
+      "startDate": "2023-06-01T00:00:00.000Z",
+      "endDate": "2024-05-31T23:59:59.999Z",
+      "status": "Expired",
+      "coverage": 200000
+    },
+    {
+      "id": "15",
+      "clientId": "10",
+      "type": "Home Insurance",
+      "policyNumber": "HI-2024-005",
+      "premium": 1050,
+      "startDate": "2024-06-01T00:00:00.000Z",
+      "endDate": "2025-05-31T23:59:59.999Z",
+      "status": "Active",
+      "coverage": 200000
+    }
+  ]
+}

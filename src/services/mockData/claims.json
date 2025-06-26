@@ -1,0 +1,104 @@
+{
+  "claimData": [
+    {
+      "id": "1",
+      "policyId": "1",
+      "clientId": "1",
+      "dateSubmitted": "2024-08-15T10:30:00.000Z",
+      "amount": 8500,
+      "status": "Pending",
+      "description": "Water damage from burst pipe in kitchen. Damage to flooring, cabinets, and drywall requiring professional restoration.",
+      "priority": "High"
+    },
+    {
+      "id": "2",
+      "policyId": "2",
+      "clientId": "1",
+      "dateSubmitted": "2024-09-02T14:45:00.000Z",
+      "amount": 3200,
+      "status": "Approved",
+      "description": "Rear-end collision on Highway 55. Bumper damage and taillight replacement needed.",
+      "priority": "Medium"
+    },
+    {
+      "id": "3",
+      "policyId": "3",
+      "clientId": "2",
+      "dateSubmitted": "2024-09-20T09:15:00.000Z",
+      "amount": 15000,
+      "status": "Under Review",
+      "description": "Storm damage to commercial building roof. Multiple shingles blown off, potential structural damage to support beams.",
+      "priority": "High"
+    },
+    {
+      "id": "4",
+      "policyId": "5",
+      "clientId": "3",
+      "dateSubmitted": "2024-10-01T16:20:00.000Z",
+      "amount": 12000,
+      "status": "Pending",
+      "description": "Flood damage to basement and first floor. Located in recently designated flood zone, extensive water damage to belongings and structure.",
+      "priority": "High"
+    },
+    {
+      "id": "5",
+      "policyId": "6",
+      "clientId": "4",
+      "dateSubmitted": "2024-07-28T11:00:00.000Z",
+      "amount": 25000,
+      "status": "Approved",
+      "description": "Vintage car theft from secured garage. 1967 Mustang Fastback stolen during home break-in.",
+      "priority": "High"
+    },
+    {
+      "id": "6",
+      "policyId": "9",
+      "clientId": "6",
+      "dateSubmitted": "2024-09-10T13:30:00.000Z",
+      "amount": 8000,
+      "status": "Rejected",
+      "description": "Equipment damage due to operator error. Excavator hydraulic system failure during non-approved operation.",
+      "priority": "Medium"
+    },
+    {
+      "id": "7",
+      "policyId": "10",
+      "clientId": "6",
+      "dateSubmitted": "2024-10-15T08:45:00.000Z",
+      "amount": 4500,
+      "status": "Pending",
+      "description": "Construction equipment vandalism at job site. Spray paint damage and minor mechanical tampering to three pieces of equipment.",
+      "priority": "Low"
+    },
+    {
+      "id": "8",
+      "policyId": "11",
+      "clientId": "7",
+      "dateSubmitted": "2024-08-30T12:15:00.000Z",
+      "amount": 18000,
+      "status": "Under Review",
+      "description": "Professional liability claim from client alleging misrepresentation in property sale. Legal fees and potential settlement costs.",
+      "priority": "High"
+    },
+    {
+      "id": "9",
+      "policyId": "12",
+      "clientId": "8",
+      "dateSubmitted": "2024-09-25T15:10:00.000Z",
+      "amount": 6200,
+      "status": "Approved",
+      "description": "Home office equipment theft during break-in. Computer equipment, monitors, and smart home devices stolen.",
+      "priority": "Medium"
+    },
+    {
+      "id": "10",
+      "policyId": "13",
+      "clientId": "9",
+      "dateSubmitted": "2024-10-05T17:30:00.000Z",
+      "amount": 2800,
+      "status": "Pending",
+      "description": "Personal belongings damaged in apartment fire caused by neighboring unit. Smoke and water damage to clothing and furniture.",
+      "priority": "Medium"
+    }
+  ]
+}

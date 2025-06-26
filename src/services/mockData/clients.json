@@ -1,0 +1,104 @@
+{
+  "clientData": [
+    {
+      "id": "1",
+      "name": "Sarah Johnson",
+      "email": "sarah.johnson@email.com",
+      "phone": "(555) 123-4567",
+      "address": "123 Oak Street, Springfield, IL 62701",
+      "dateJoined": "2023-01-15T00:00:00.000Z",
+      "riskScore": 3,
+      "notes": "Reliable client with excellent payment history. Prefers email communication."
+    },
+    {
+      "id": "2",
+      "name": "Michael Chen",
+      "email": "m.chen@techcorp.com",
+      "phone": "(555) 234-5678",
+      "address": "456 Maple Ave, Chicago, IL 60601",
+      "dateJoined": "2023-02-22T00:00:00.000Z",
+      "riskScore": 2,
+      "notes": "Business owner with multiple properties. Very responsive to policy updates."
+    },
+    {
+      "id": "3",
+      "name": "Emma Rodriguez",
+      "email": "emma.r.home@gmail.com",
+      "phone": "(555) 345-6789",
+      "address": "789 Pine Road, Austin, TX 78701",
+      "dateJoined": "2023-03-10T00:00:00.000Z",
+      "riskScore": 4,
+      "notes": "Recently moved to a flood zone area. Requires special coverage considerations."
+    },
+    {
+      "id": "4",
+      "name": "David Thompson",
+      "email": "dthompson@consulting.net",
+      "phone": "(555) 456-7890",
+      "address": "321 Elm Street, Denver, CO 80202",
+      "dateJoined": "2022-11-05T00:00:00.000Z",
+      "riskScore": 6,
+      "notes": "High-value client with vintage car collection. Requires specialized coverage."
+    },
+    {
+      "id": "5",
+      "name": "Lisa Park",
+      "email": "lisa.park.family@outlook.com",
+      "phone": "(555) 567-8901",
+      "address": "654 Birch Lane, Seattle, WA 98101",
+      "dateJoined": "2023-04-18T00:00:00.000Z",
+      "riskScore": 1,
+      "notes": "New family client. Very budget-conscious but responsible. Prefers phone contact."
+    },
+    {
+      "id": "6",
+      "name": "Robert Martinez",
+      "email": "r.martinez.construction@gmail.com",
+      "phone": "(555) 678-9012",
+      "address": "987 Cedar Court, Phoenix, AZ 85001",
+      "dateJoined": "2022-09-12T00:00:00.000Z",
+      "riskScore": 7,
+      "notes": "Construction company owner. Higher risk due to commercial activities and equipment."
+    },
+    {
+      "id": "7",
+      "name": "Jennifer Wilson",
+      "email": "j.wilson.realty@professional.com",
+      "phone": "(555) 789-0123",
+      "address": "147 Willow Street, Miami, FL 33101",
+      "dateJoined": "2023-06-30T00:00:00.000Z",
+      "riskScore": 3,
+      "notes": "Real estate agent with multiple properties. Always punctual with renewals."
+    },
+    {
+      "id": "8",
+      "name": "Thomas Anderson",
+      "email": "tanderson.tech@innovation.co",
+      "phone": "(555) 890-1234",
+      "address": "258 Spruce Avenue, Boston, MA 02101",
+      "dateJoined": "2022-12-01T00:00:00.000Z",
+      "riskScore": 2,
+      "notes": "Tech professional working from home. Smart home setup requires updated coverage."
+    },
+    {
+      "id": "9",
+      "name": "Maria Garcia",
+      "email": "maria.garcia.family@homemail.com",
+      "phone": "(555) 901-2345",
+      "address": "369 Poplar Drive, Portland, OR 97201",
+      "dateJoined": "2023-08-14T00:00:00.000Z",
+      "riskScore": 5,
+      "notes": "Recent divorce settlement. Updating all policies to reflect new living situation."
+    },
+    {
+      "id": "10",
+      "name": "James Taylor",
+      "email": "james.taylor.retired@senior.net",
+      "phone": "(555) 012-3456",
+      "address": "741 Hickory Hill, Nashville, TN 37201",
+      "dateJoined": "2021-05-20T00:00:00.000Z",
+      "riskScore": 3,
+      "notes": "Retired client with fixed income. Loyal customer for over 3 years. Prefers traditional mail."
+    }
+  ]
+}
