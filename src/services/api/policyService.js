@@ -1,4 +1,5 @@
-import { policyData } from '@/services/mockData/policies.json'
+import { policyData } from "@/services/mockData/policies.json";
+import React from "react";
 
 class PolicyService {
   constructor() {
@@ -44,14 +45,13 @@ class PolicyService {
     return { ...this.policies[index] }
   }
 
-  async delete(id) {
+async delete(id) {
     await this.delay()
     const index = this.policies.findIndex(p => p.id === id)
     if (index === -1) {
       throw new Error('Policy not found')
     }
     this.policies.splice(index, 1)
-this.policies.splice(index, 1)
     return true
   }
 
@@ -99,12 +99,15 @@ this.policies.splice(index, 1)
       durationsByType[policy.type].push(durationMonths)
     })
     
-    const avgDurations = Object.keys(durationsByType).map(type => ({
+const avgDurations = Object.keys(durationsByType).map(type => ({
       type,
       avgDuration: Math.round(durationsByType[type].reduce((a, b) => a + b, 0) / durationsByType[type].length),
-      count: durationsByType[type].length
     }))
     
     return avgDurations.sort((a, b) => b.avgDuration - a.avgDuration)
   }
 }
+
+// Export an instance of PolicyService
+export const policyService = new PolicyService()
+export default policyService
