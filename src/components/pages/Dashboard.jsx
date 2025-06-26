@@ -69,8 +69,8 @@ const loadData = async () => {
   const totalPremiums = policies.reduce((sum, p) => sum + p.premium, 0)
 
   // Get expiring policies (within 30 days)
-  const expiringPolicies = policies.filter(policy => {
-    const daysUntilExpiry = Math.ceil((new Date(policy.endDate) - new Date()) / (1000 * 60 * 60 * 24))
+const expiringPolicies = policies.filter(policy => {
+    const daysUntilExpiry = Math.ceil((new Date(policy.end_date) - new Date()) / (1000 * 60 * 60 * 24))
     return daysUntilExpiry <= 30 && daysUntilExpiry > 0 && policy.status === 'Active'
   })
 
@@ -87,10 +87,10 @@ const formatCurrency = (amount) => {
   }
 
   // Calculate premium trends by month
-  const premiumTrends = React.useMemo(() => {
+const premiumTrends = React.useMemo(() => {
     const monthlyData = {};
     policies.forEach(policy => {
-      const month = format(new Date(policy.startDate), 'MMM yyyy');
+      const month = format(new Date(policy.start_date), 'MMM yyyy');
       if (!monthlyData[month]) {
         monthlyData[month] = 0;
       }
@@ -104,11 +104,11 @@ const formatCurrency = (amount) => {
   }, [policies]);
 
   // Calculate policy duration distribution
-  const policyDurations = React.useMemo(() => {
+const policyDurations = React.useMemo(() => {
     const durationData = {};
     policies.forEach(policy => {
-      const startDate = new Date(policy.startDate);
-      const endDate = new Date(policy.endDate);
+      const startDate = new Date(policy.start_date);
+      const endDate = new Date(policy.end_date);
       const duration = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24 * 365)); // Years
       const type = policy.type;
       
