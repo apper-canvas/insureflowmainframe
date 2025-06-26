@@ -21,8 +21,6 @@ const Dashboard = () => {
   const [claims, setClaims] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-
-  const loadData = async () => {
 const loadData = async () => {
     try {
       setLoading(true)
