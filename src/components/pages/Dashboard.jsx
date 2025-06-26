@@ -14,13 +14,15 @@ import Card from "@/components/atoms/Card";
 import Badge from "@/components/atoms/Badge";
 import LoadingSpinner from "@/components/atoms/LoadingSpinner";
 import Button from "@/components/atoms/Button";
-const Dashboard = () => {
-  const [clients, setClients] = useState([])
-  const [policies, setPolicies] = useState([])
-  const [claims, setClaims] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
 
+const Dashboard = () => {
+  const [clients, setClients] = useState([]);
+  const [policies, setPolicies] = useState([]);
+  const [claims, setClaims] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  const loadData = async () => {
 const loadData = async () => {
     try {
       setLoading(true)
